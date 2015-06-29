@@ -1,1 +1,3 @@
-This repo contains the source code for bite
+Bite Source Code.
+
+Read the Wiki for more details.
