@@ -1,28 +1,7 @@
-@main("Welcome to Bite API Page") {
-<div class="page-header">
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>API List</h1>
-            <p class="lead">Below is the list of all the APIs available in bite platform.</p>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>API Name</th>
-                <th>API Path</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tr>
-                <td>Get User</td>
-                <td>/user/{{userId}}</td>
-                <td>Get the complete detail of the user based on the user id.</td>
-            </tr>
-        </table>
-    </div>
-</div>
+@(message: String)
+
+@main("Welcome to Play") {
+
+    @message
+
 }

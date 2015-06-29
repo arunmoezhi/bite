@@ -1,10 +1,23 @@
 package services;
 
-import models.User;
 
-public interface UserService {
+import entities.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-    public void addUser(User user);
-    public User getUser(String  userId);
-    public User getUser(String userName, String password);
+import javax.persistence.*;
+import java.util.List;
+
+@Service
+@Transactional
+public class UserService implements IUserService {
+
+    @PersistenceContext
+    EntityManager em;
+
+    @Override
+    public List<User> getAllUsers() {
+        Query query = em.createQuery("SELECT u FROM User u");
+        return (List<User>) query.getResultList();
+    }
 }
