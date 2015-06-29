@@ -1,0 +1,5 @@
+.top-buffer { margin-top:15px; };
+#eventForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
