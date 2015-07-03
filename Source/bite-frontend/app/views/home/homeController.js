@@ -1,3 +1,3 @@
-/**
- * Created by Daniel on 6/26/2015.
- */
+ngapp.controller('homeController', function($scope){
+
+});

@@ -1,3 +1,1 @@
-/**
- * Created by Daniel on 6/26/2015.
- */
+var ngapp = angular.module('biteApp',['ngRoute']);
