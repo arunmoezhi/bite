@@ -13,7 +13,7 @@ import services.IUserService;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
-public class CommonController {
+public class CommonController extends Controller {
     @Autowired
     private ICommonService cmnService;
 

@@ -7,7 +7,8 @@
     <title>Bite Site</title>
 
     <!-- Bootstrap -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,15 +62,15 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/login" target="_blank">Login</a></li>
-                <li><a href="#/signup" target="_blank">Sign up</a></li>
+                <li><a href="#/login">Login</a></li>
+                <li><a href="#/signup">Sign up</a></li>
             </ul>
 
         </div>
     </div>
 </div>
-<div class="container" style="margin-top: 46px">
-    <ng-view></ng-view>
+<div class="container" style="margin-top: 75px">
+    <div ng-view></div>
 </div>
 <footer>
     <hr/>
@@ -99,5 +100,6 @@
 <!--Angular Views-->
 <script src="app/views/home/homeController.js"></script>
 <script src="app/views/profile/profileController.js"></script>
+<script src="app/views/signup/signupController.js"></script>
 </body>
 </html>

@@ -1,0 +1,81 @@
+<form name="signupForm" novalidate ng-submit="addUser()">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Join Bite</h2>
+
+            <p> Already have bite account? <a href="#/login">Login</a></p>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12 well well-sm">Account Information</div>
+                <div class="col-md-12" style="padding: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group" ng-class="signupForm.userEmail.$invalid && signupForm.userEmail.$dirty  ? 'has-error' : ''">
+                            <label class="control-label" for="userEmail">
+                                Email Address <span class="text-danger">*</span>
+                            </label>
+                            <input ng-model="user.email" type="email" class="form-control" required
+                                   placeholder="Enter your email address" id="userEmail" name="userEmail">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" ng-class="signupForm.userPassword.$invalid && signupForm.userPassword.$dirty  ? 'has-error' : ''">
+                        <label class="control-label" for="userPassword">Password <span
+                                class="text-danger">*</span></label>
+                        <input ng-model="user.password" type="password" class="form-control" required onblur="signupForm.userConfirmPassword.pattern = this.value;"
+                               placeholder="Enter a password" id="userPassword" name="userPassword">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" ng-class="signupForm.userConfirmPassword.$invalid && signupForm.userConfirmPassword.$dirty  ? 'has-error' : ''">
+                        <label class="control-label" for="userConfirmPassword">Re-type Password <span
+                                class="text-danger">*</span></label>
+                        <input ng-model="user.confirmPassword" type="password" class="form-control" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"  placeholder="Confirm your password"
+                               id="userConfirmPassword" name="userConfirmPassword">
+                    </div>
+                </div>
+
+                <div class="col-md-12 well well-sm" style="margin-top: 15px">Personal Information</div>
+
+                <div class="col-md-6">
+                    <div class="form-group" ng-class="(signupForm.first_name.$invalid && signupForm.first_name.$dirty || signupForm.last_name.$invalid && signupForm.last_name.$dirty)  ? 'has-error' : ''">
+                        <label class="control-label" for="userFName">Name</label>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input ng-model="user.firstName" type="text" name="first_name" class="form-control"
+                                       placeholder="First Name" id="userFName" required>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="text" ng-model="user.lastName" name="last_name" class="form-control"
+                                       placeholder="Last Name" id="userLName" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="userGender">Gender</label>
+                        <select class="form-control" id="select" ng-model="user.gender" id="userGender" name="userGender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userDob" class="control-label">Date of birth</label>
+                        <input type="date" class="form-control" ng-model="user.dob" id="userDob" name="userDob">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="button" class="btn btn-default">Cancel</button>
+            <button type="button" class="btn btn-success disabled"
+                    ng-show="signupForm.$invalid">Sign-up
+            </button>
+            <button type="button" class="btn btn-success" ng-click="addUser()"
+                    ng-hide="signupForm.$invalid">Sign-up
+            </button>
+        </div>
+    </div>
+</form>
+				

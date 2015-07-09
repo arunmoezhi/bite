@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  filters,
   "org.springframework" % "spring-core" % "4.1.6.RELEASE",
   "org.springframework" % "spring-context" % "4.1.6.RELEASE",
   "javax.inject" % "javax.inject" % "1",

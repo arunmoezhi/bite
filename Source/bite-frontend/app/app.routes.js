@@ -11,4 +11,10 @@ ngapp.config(function($routeProvider){
            controller : 'homeController'
        }
    )
+       .when(
+       '/signup', {
+           templateUrl : 'app/views/signup/signupView.html',
+           controller : 'signupController'
+       }
+   )
 });
