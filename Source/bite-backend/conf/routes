@@ -3,11 +3,9 @@
 # ~~~~
 
 # Home page
-GET            /                    @controllers.Application.index()
-GET            /users               @controllers.UserController.getUsers(callback: String)
-POST           /user                @controllers.UserController.addUser()
+GET            /                controllers.Application.index()
+GET            /users           controllers.UserController.getUsers()
+GET            /user/:id        controllers.UserController.getUser(id: String)
 
-# Map static resources from the /public folder to the /assets URL path
-GET            /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
 # Pre-flight request map
-OPTIONS        /*all                controllers.Application.preflight(all)
+OPTIONS        /*all            controllers.Application.preFlight(all)

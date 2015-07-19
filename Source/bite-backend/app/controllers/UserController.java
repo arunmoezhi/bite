@@ -1,37 +1,36 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import entities.Cuisine;
-import entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
-import services.IUserService;
-import views.html.index;
+import utils.SqlQueries;
+import utils.SqlWrapper;
 
-import java.util.List;
+import javax.xml.ws.http.HTTPException;
 
-import static play.libs.Jsonp.jsonp;
-
-@org.springframework.stereotype.Controller
 public class UserController extends Controller {
-    @Autowired
-    private IUserService usrService;
-
-    public Result getUsers(String callback) {
-        List<User> usrs = usrService.getAllUsers();
-        JsonNode json = Json.toJson(usrs);
-        return Controller.ok(jsonp(callback, json));
+    public Result getUser(String id) {
+        try {
+            String sql = SqlQueries.getInstance().getQuery("GetUser", id);
+            SqlWrapper sqlWrapper = new SqlWrapper();
+            JsonNode json = Json.toJson(sqlWrapper.getSingleData(sql));
+            return Controller.ok(json);
+        }
+        catch (Exception ex){
+            throw new HTTPException(INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result addUser() {
-        Http.RequestBody body = request().body();
-        Cuisine usr = Json.fromJson(body.asJson(), Cuisine.class);
-        return Controller.ok(Json.toJson("User Added Successfully : " + body.asJson()));
+    public Result getUsers() {
+        try {
+            String sql = SqlQueries.getInstance().getQuery("GetAllUsers");
+            SqlWrapper sqlWrapper = new SqlWrapper();
+            JsonNode json = Json.toJson(sqlWrapper.getMultipleData(sql));
+            return Controller.ok(json);
+        }
+        catch (Exception ex){
+            throw new HTTPException(INTERNAL_SERVER_ERROR);
+        }
     }
-
 }
