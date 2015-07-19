@@ -1,4 +1,4 @@
-Bite Source Code
+Bite Source Code - branch plainSql
 ================
 
 Read the Wiki for more details.
