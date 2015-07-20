@@ -15,48 +15,57 @@ public class SqlWrapper {
         connection = DB.getConnection();
     }
 
-    public Object getSingleData(String sql) throws SQLException {
-        ResultSet rs = null;
-        Statement stmt = null;
+    public ResultSet getSingleData(String sql) throws SQLException {
+        ResultSet rs;
+        Statement stmt;
         stmt = connection.createStatement();
         rs = stmt.executeQuery(sql);
-        return convertToObject(rs, true);
+        return rs;
     }
 
-    public Object getMultipleData(String sql) throws SQLException {
-        ResultSet rs = null;
-        Statement stmt = null;
+    public ResultSet getMultipleData(String sql) throws SQLException {
+        ResultSet rs;
+        Statement stmt;
         stmt = connection.createStatement();
         rs = stmt.executeQuery(sql);
-        return convertToObject(rs, false);
+        return rs;
     }
 
-    public Object getMultipleData(String sql, int limit) throws SQLException {
+    public ResultSet getMultipleData(String sql, int limit) throws SQLException {
         if (!sql.contains(" limit "))
             sql += " limit 0," + limit;
         return getMultipleData(sql);
     }
 
-    public Object getMultipleData(String sql, int limit, int start) throws SQLException {
+    public ResultSet getMultipleData(String sql, int limit, int start) throws SQLException {
         if (!sql.contains(" limit "))
             sql += " limit " + start + "," + limit;
         return getMultipleData(sql);
     }
 
-    public Object convertToObject(ResultSet rs, boolean isSingle) throws SQLException {
-        List<Map<String, Object>> records = new ArrayList<Map<String, Object>>();
+    public static List<Map<String, Object>> convertToObjects(ResultSet rs) throws SQLException {
+        List<Map<String, Object>> records = new ArrayList<>();
         while (rs.next()) {
             int cols = rs.getMetaData().getColumnCount();
-            HashMap arr = new HashMap();
+            Map<String, Object> individualRecord = new HashMap<>();
             for (int i = 0; i < cols; i++) {
-                arr.put(rs.getMetaData().getColumnName(i + 1), rs.getObject(i + 1));
+                individualRecord.put(rs.getMetaData().getColumnName(i + 1), rs.getObject(i + 1));
             }
-            if (isSingle) {
-                return arr;
-            }
-            records.add(arr);
+            records.add(individualRecord);
         }
         return records;
+    }
+
+    public static Map<String, Object> convertToObject(ResultSet rs) throws SQLException {
+        Map<String, Object> record = new HashMap<>();
+        while (rs.next()) {
+            int cols = rs.getMetaData().getColumnCount();
+            for (int i = 0; i < cols; i++) {
+                record.put(rs.getMetaData().getColumnName(i + 1), rs.getObject(i + 1));
+            }
+
+        }
+        return record;
     }
 
     public void Finish() {
