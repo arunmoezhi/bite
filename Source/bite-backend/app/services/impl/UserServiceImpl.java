@@ -40,19 +40,41 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User getUser(String userId) {
+        String sql = SqlQueries.getInstance().getQuery("GetUser", userId);
+        SqlWrapper sqlWrapper = new SqlWrapper();
+        try {
+            ResultSet resultSet = sqlWrapper.getSingleData(sql);
+            Map<String, Object> user = SqlWrapper.convertToObject(resultSet);
+            return convertToUserObject(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User convertToUserObject(Map<String, Object> user) {
+        User modelUser = new User();
+        if (user != null && !user.isEmpty()) {
+            modelUser.setUserId((Integer) user.get(USER_ID));
+            modelUser.setFirstName((String) user.get(FIRST_NAME));
+            modelUser.setLastName((String) user.get(LAST_NAME));
+            modelUser.setJoinDate((Date) user.get(JOIN_DATE));
+            modelUser.setGender((String) user.get(GENDER));
+            modelUser.setDob((Date) user.get(DOB));
+            modelUser.setUserName((String) user.get(USER_NAME));
+            modelUser.setEmail((String) user.get(USER_EMAIL));
+            modelUser.setPassword("***");
+            return modelUser;
+        }
+        return null;
+
+    }
+
     private List<User> convertToUserObjects(List<Map<String, Object>> usersList) {
         List<User> users = new ArrayList<>();
         for (Map<String, Object> user: usersList) {
-            User modelUser = new User();
-            modelUser.setFirstName((String)user.get(FIRST_NAME));
-            modelUser.setLastName((String)user.get(LAST_NAME));
-            modelUser.setJoinDate((Date)user.get(JOIN_DATE));
-            modelUser.setGender((String)user.get(GENDER));
-            modelUser.setDob((Date)user.get(DOB));
-            modelUser.setUserName((String)user.get(USER_NAME));
-            modelUser.setEmail((String)user.get(USER_EMAIL));
-            modelUser.setPassword("***");
-            users.add(modelUser);
+            users.add(convertToUserObject(user));
         }
         return users;
     }

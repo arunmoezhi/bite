@@ -7,18 +7,20 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.UserService;
 import services.impl.UserServiceImpl;
-import utils.SqlQueries;
-import utils.SqlWrapper;
 
 import javax.xml.ws.http.HTTPException;
 import java.util.List;
 
 public class UserController extends Controller {
+
     public Result getUser(String id) {
         try {
-            String sql = SqlQueries.getInstance().getQuery("GetUser", id);
-            SqlWrapper sqlWrapper = new SqlWrapper();
-            JsonNode json = Json.toJson(sqlWrapper.getSingleData(sql));
+            UserService userService = new UserServiceImpl();
+            User user = userService.getUser(id);
+            if (user == null) {
+                return Controller.notFound("The requested user " + id + " is not found");
+            }
+            JsonNode json = Json.toJson(user);
             return Controller.ok(json);
         }
         catch (Exception ex){
