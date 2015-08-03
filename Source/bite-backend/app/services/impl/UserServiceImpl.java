@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         String sql = SqlQueries.getInstance().getQuery("GetAllUsers");
-        SqlWrapper sqlWrapper = new SqlWrapper();
+        SqlWrapper sqlWrapper = SqlWrapper.getInstance();
         try {
             ResultSet resultSet = sqlWrapper.getMultipleData(sql);
             List<Map<String, Object>> usersList = SqlWrapper.convertToObjects(resultSet);
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId) {
         String sql = SqlQueries.getInstance().getQuery("GetUser", userId);
-        SqlWrapper sqlWrapper = new SqlWrapper();
+        SqlWrapper sqlWrapper = SqlWrapper.getInstance();
         try {
             ResultSet resultSet = sqlWrapper.getSingleData(sql);
             Map<String, Object> user = SqlWrapper.convertToObject(resultSet);
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         user.setJoinDate(joiningDate);
         String sql = SqlQueries.getInstance().getQuery("CreateUser");
         System.out.println("sql query = " + sql);
-        UserServiceSqlWrapper sqlWrapper = new UserServiceSqlWrapper();
+        UserServiceSqlWrapper sqlWrapper = UserServiceSqlWrapper.getInstance();
         sqlWrapper.createUserInDb(sql, user);
         return getUser(user.getEmail());
 

@@ -11,12 +11,18 @@ import java.sql.SQLException;
 /**
  * Created by saravmalar on 8/2/15.
  */
-public class UserServiceSqlWrapper extends SqlWrapper {
+public class UserServiceSqlWrapper {
 
     private Connection connection;
+    private SqlWrapper sqlWrapper;
 
-    public UserServiceSqlWrapper() {
+    private UserServiceSqlWrapper() {
         connection = DB.getConnection();
+        sqlWrapper = SqlWrapper.getInstance();
+    }
+
+    public static UserServiceSqlWrapper getInstance() {
+        return new UserServiceSqlWrapper();
     }
 
     public void createUserInDb(String sql, User user) {
@@ -30,7 +36,7 @@ public class UserServiceSqlWrapper extends SqlWrapper {
             preparedStatement.setDate(6, new java.sql.Date(user.getDob().getTime()));
             preparedStatement.setString(7, user.getGender());
             preparedStatement.setDate(8, new java.sql.Date(user.getJoinDate().getTime()));
-            super.createData(preparedStatement);
+            sqlWrapper.createData(preparedStatement);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

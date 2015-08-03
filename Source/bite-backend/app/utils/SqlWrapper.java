@@ -8,8 +8,12 @@ import java.util.*;
 public class SqlWrapper {
     private Connection connection;
 
-    public SqlWrapper() {
+    private SqlWrapper() {
         connection = DB.getConnection();
+    }
+
+    public static SqlWrapper getInstance() {
+        return new SqlWrapper();
     }
 
     public ResultSet getSingleData(String sql) throws SQLException {
