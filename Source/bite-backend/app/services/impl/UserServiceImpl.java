@@ -1,16 +1,16 @@
 package services.impl;
 
 import models.User;
+import play.mvc.Http;
 import services.UserService;
 import utils.SqlQueries;
 import utils.SqlWrapper;
 
+import javax.xml.ws.http.HTTPException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by saravmalar on 7/19/15.
@@ -53,6 +53,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User createUser(User user) {
+        //Validate whether the user already exists.
+        User rtvdUser = getUser(user.getEmail());
+        if (rtvdUser != null && rtvdUser.getEmail().equals(user.getEmail())) {// throw exception.
+            throw new HTTPException(Http.Status.CONFLICT);
+        }
+        Date joiningDate = Calendar.getInstance().getTime();
+        user.setJoinDate(joiningDate);
+        String sql = SqlQueries.getInstance().getQuery("CreateUser");
+        System.out.println("sql query = " + sql);
+        UserServiceSqlWrapper sqlWrapper = new UserServiceSqlWrapper();
+        sqlWrapper.createUserInDb(sql, user);
+        return getUser(user.getEmail());
+
+    }
+
     private User convertToUserObject(Map<String, Object> user) {
         User modelUser = new User();
         if (user != null && !user.isEmpty()) {
@@ -78,4 +95,5 @@ public class UserServiceImpl implements UserService {
         }
         return users;
     }
+
 }

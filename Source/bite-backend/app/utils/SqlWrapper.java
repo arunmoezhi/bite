@@ -2,10 +2,7 @@ package utils;
 
 import play.db.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class SqlWrapper {
@@ -41,6 +38,11 @@ public class SqlWrapper {
         if (!sql.contains(" limit "))
             sql += " limit " + start + "," + limit;
         return getMultipleData(sql);
+    }
+
+    public void createData(PreparedStatement preparedStatement) throws SQLException {
+        //think of whether to process return status of the statement.
+        preparedStatement.executeUpdate();
     }
 
     public static List<Map<String, Object>> convertToObjects(ResultSet rs) throws SQLException {

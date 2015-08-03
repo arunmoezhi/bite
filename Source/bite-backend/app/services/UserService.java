@@ -14,4 +14,6 @@ public interface UserService {
     public List<User> getUsers();
 
     public User getUser(String userId);
+
+    public User createUser(User user);
 }

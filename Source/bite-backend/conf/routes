@@ -6,6 +6,6 @@
 GET            /                controllers.Application.index()
 GET            /users           controllers.UserController.getUsers()
 GET            /user/:id        controllers.UserController.getUser(id: String)
-
+POST           /users           controllers.UserController.createUser()
 # Pre-flight request map
 OPTIONS        /*all            controllers.Application.preFlight(all)
